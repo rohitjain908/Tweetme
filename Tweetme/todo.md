@@ -5,7 +5,9 @@
 
 
 2.Tweets
-  ->Creating,deleting,updating
+  ->Creating
+      Text,img
+  ->deleting,updating
   ->Retweet
   ->Like,Unlike
 

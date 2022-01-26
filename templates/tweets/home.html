@@ -1,0 +1,79 @@
+{% extends 'tweets/base.html' %}
+
+{% block content%}
+
+  <div class="row text-center">
+    <div class="col">
+      <h1>Welcome to Tweetme</h1>
+    </div>
+  </div>
+  <div id="tweet">
+    All tweets will shown here
+  </div>
+
+
+  </div>
+
+  <script>
+
+    var twwets=document.getElementById('tweet')//get html element
+    //twwets.innerHTML="Loading....."//set new html in that element
+
+
+    //var ele1="<h1>Hi there 1</h1>"
+    //var ele2="<h1>Hi there 2</h1>"
+    //var ele3="<h1>Hi there 3</h1>"
+
+    //twwets.innerHTML=ele1+ele2+ele3;
+
+    function handleclick(tweet_id,currentlike){
+      console.log(tweet_id,currentlike)
+      currentlike++;
+    }
+
+    function Likebtn(tweet){
+      var b="<button class='btn btn-primary' onclick=handleclick("+tweet.id+","+tweet.likes+")>"+tweet.likes+"Like</button>"
+      return b;
+
+    }
+
+    function formattweet(tweet){
+      var formattedtweet="<div class='col-12 col-md-10 mx-auto border rounded py-3 px-3 mb-4'>"+"<p>"+tweet.content+"</p>"+
+        "<div class='btn-group'>"+Likebtn(tweet)+"</div>"
+        +"</div>";
+      return formattedtweet;
+    }
+
+
+
+    const xhr=new XMLHttpRequest();
+    const method='GET';
+    const url=" http://127.0.0.1:8000/tweets/";
+    const responseType="json";
+    xhr.responseType=responseType
+    xhr.open(method,url)
+    xhr.onload=function(){
+     var ServerResponse=xhr.response
+     var listitem=ServerResponse.response
+     console.log(listitem)
+
+
+     var finlatweets="";
+     var i;
+     for(i=0;i<listitem.length;i++){
+       //console.log(i);
+       //console.log(listitem[i]);
+
+       var curtweet=formattweet(listitem[i])
+       finlatweets+=curtweet;
+
+     }
+
+     twwets.innerHTML=finlatweets
+    }
+    xhr.send();
+
+
+  </script>
+
+{% endblock content%}
